@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>DZ BATTLE 3D</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#101218;color:white;font-family:Arial,sans-serif}
+body{display:flex;align-items:center;justify-content:center}
+.box{text-align:center;width:90%;max-width:420px}
+h1{font-size:34px;margin:0 0 12px}
+p{opacity:.7;margin-bottom:28px}
+button{border:0;border-radius:18px;padding:18px 55px;font-size:24px;font-weight:bold;background:#d99a22;color:#111}
+button:active{transform:scale(.96)}
+#msg{margin-top:25px;min-height:24px}
+</style>
+</head>
+<body>
+<div class="box">
+<h1>DZ BATTLE 3D</h1>
+<p>Offline test build · v1.0</p>
+<button onclick="startGame()">START</button>
+<div id="msg"></div>
+</div>
+<script>
+function startGame(){document.getElementById('msg').textContent='DZ BATTLE 3D — START!';}
+</script>
+</body>
+</html>
