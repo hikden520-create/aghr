@@ -1,12 +1,54 @@
-Commit message
-Add GitHub Actions workflow to build DZ BATTLE APK
-Copilot commit message generated: Add GitHub Actions workflow to build DZ BATTLE APK
-Extended description
-Add an optional extended description...
 
-Message and description suggested by Copilot.
-Direct commit or PR
 
-Commit directly to the main branch
+name: Build Android APK
 
-Create a new branch for this commit and start a pull request Learn more about pull requests
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Cordova
+        run: npm install -g cordova
+
+      - name: Prepare Android project
+        run: |
+          cordova create android-app dz.battle "DZ BATTLE"
+          mkdir -p android-app/www/models
+          cp index.html android-app/www/index.html
+          cp player.glb android-app/www/models/player.glb
+          cd android-app
+          cordova platform add android@13
+
+      - name: Build APK
+        run: |
+          cd android-app
+          cordova build android --debug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: DZ-BATTLE-APK
+          path: android-app/platforms/android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
